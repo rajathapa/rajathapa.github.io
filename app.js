@@ -5,22 +5,17 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
   vm.name = 'Ui Mask';
   vm.phone = '';
   vm.defaultPlaceholder = '04XX XXX XXX';
-
-function Init(){
 // mimic refresh
-  if (localStorage.phone){
+  if (localStorage.phone != '') {
     vm.phone = localStorage.phone;
   }
-}
-
-Init();
-
 }]);
 
 app.directive('customPlaceholder', [function () {
   return {
     scope: {
-      phoneNumber: "="
+      phoneNumber: "=",
+      pholder: "="
     },
     link: function (scope, element, attr) {
       var defaultMask = '(99) 9999 9999';
@@ -33,7 +28,6 @@ app.directive('customPlaceholder', [function () {
           maskPhoneNumber();
         }
       });
-
 
       element.on('focus', function () {
         if (!scope.phoneNumber) {
@@ -53,7 +47,7 @@ app.directive('customPlaceholder', [function () {
       element.on('focusout', function () {
         if (!scope.phoneNumber) {
           attr.$set('uiMask', mobileMask);
-          attr.$set('placeholder', '04XX XXX XXX');
+          attr.$set('placeholder', scope.pholder);
         }
       });
 
