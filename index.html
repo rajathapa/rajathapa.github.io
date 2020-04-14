@@ -26,23 +26,17 @@
                 type="tel"
                 ng-required="vm.models.makeRequired"
                 ui-mask="{{vm.phoneMask}}"
-                pholder="vm.phone"
+                phone-number="vm.phone"
                 custom-placeholder
                 placeholder="04XX XXX XXX"
                 >
-
-             
-  <!-- --ng-keyup="vm.updatePhoneMask()" -->
-              <!-- <input type="tel" ng-model="vm.phone1" ui-mask="9999 999 999" > -->
-
             </div>
               <p> currentMask {{vm.phoneMask}}</p>
             <p>phone value = {{vm.phone}}</p>
-            <!-- <p>mask value = {{vm.phoneMask}}</p> -->
+
             <span ng-show="!testForm['phone'].$valid">phone invalid</span>
             <span ng-show="testForm.$dirty">form dirty</span>
-            <span ng-show="testForm.$invalid">form invalid</span>
-      
+            <span ng-show="testForm.$invalid">form invalid</span>     
             <input type="button" class="btn btn-primary" name="btn1" value="test button" ng-disabled="testForm.$invalid" ng-click="models.makeRequired = true;" />
           </form>
         </div>
