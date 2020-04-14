@@ -2,32 +2,8 @@ var app = angular.module('myApp', ['ui.mask']);
 
 app.controller('MainCtrl', ['$scope', function ($scope) {
   var vm = this;
-  vm.defaultMask = '(99) 9999 9999';
-  vm.mobileMask = '9999 999 999';
-  vm.phoneMask = '9999 999 999';
-  vm.regExpPhone = '^[1,0]\\d{9}$';
-  vm.regExpMobilePrefix = '(^[1][38]00)|(^04)';
   vm.name = 'Ui Mask';
   vm.phone = '';
-  vm.models = {
-    makeRequired: false
-  };
-
-//   vm.updatePhoneMask = function () {
-//     if (!vm.phone) {
-//       return;
-//     }
-
-//     var re = new RegExp(vm.regExpMobilePrefix);
-
-//     if (vm.phone.match(re)) {
-//       vm.phoneMask = vm.mobileMask;
-//     }
-//     else {
-//       vm.phoneMask = vm.defaultMask;
-//     }
-//   };
-
 }]);
 
 app.directive('customPlaceholder', [function () {
@@ -36,10 +12,15 @@ app.directive('customPlaceholder', [function () {
       phoneNumber: "="
     },
     link: function (scope, element, attr) {
+      var defaultMask = '(99) 9999 9999';
+      var mobileMask = '9999 999 999';
+      var regExpMobilePrefix = '(^[1][38]00)|(^04)';
+      var re = new RegExp(regExpMobilePrefix);
+
       element.on('focus', function () {
         if (!scope.phoneNumber) {
-          attr.$set('uiMask', '9999 999 999');
-          attr.$set('placeholder', '____ ___ ___');
+          attr.$set('uiMask', mobileMask);
+          setPlaceholder(attr, mobileMask);
         }
       });
 
@@ -53,27 +34,25 @@ app.directive('customPlaceholder', [function () {
 
       element.on('focusout', function () {
         if (!scope.phoneNumber) {
-          attr.$set('uiMask', '9999 999 999');
+          attr.$set('uiMask', mobileMask);
           attr.$set('placeholder', '04XX XXX XXX');
         }
       });
 
-
       function maskPhoneNumber() {
-        var defaultMask = '(99) 9999 9999';
-        var mobileMask = '9999 999 999';
-        var regExpMobilePrefix = '(^[1][38]00)|(^04)';
-        var regExpPhone = '^[1,0]\\d{9}$';
-        var re = new RegExp(regExpMobilePrefix);
-
         if (scope.phoneNumber.match(re)) {
-          attr.$set('uiMask', '9999 999 999');
-          attr.$set('placeholder', '____ ___ ___');
+          attr.$set('uiMask', mobileMask);
+          setPlaceholder(attr, mobileMask);
         }
         else {
-          attr.$set('uiMask', '(99) 9999 9999');
-          attr.$set('placeholder', '(__) ____ ____');
+          attr.$set('uiMask', defaultMask);
+          setPlaceholder(attr, defaultMask);
         }
+      }
+
+      function setPlaceholder(attr, value){
+        var replacePattern = /[a-zA-Z0-9]/g;
+        attr.$set('placeholder', value.replace(replacePattern, '_'));
       }
     }
   }

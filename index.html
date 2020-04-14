@@ -19,28 +19,24 @@
           <h1>Angular {{vm.name}}</h1>
           <form name="testForm">
             <div class="form-group">
-              <label for="exampleInputDate">Date</label>
              <label for="exampleInputDate">Phone</label>
               <input type="text" name="phone" class="form-control" id="phoneInput"
                 ng-model="vm.phone"
                 type="tel"
-                ng-required="vm.models.makeRequired"
                 ui-mask="{{vm.phoneMask}}"
                 phone-number="vm.phone"
                 custom-placeholder
                 placeholder="04XX XXX XXX"
                 >
             </div>
-              <p> currentMask {{vm.phoneMask}}</p>
-            <p>phone value = {{vm.phone}}</p>
-
+              <p>phone value = {{vm.phone}}</p>
             <span ng-show="!testForm['phone'].$valid">phone invalid</span>
             <span ng-show="testForm.$dirty">form dirty</span>
             <span ng-show="testForm.$invalid">form invalid</span>     
             <input type="button" class="btn btn-primary" name="btn1" value="test button" ng-disabled="testForm.$invalid" ng-click="models.makeRequired = true;" />
           </form>
         </div>
-      </div><!-- /.row -->
-    </div><!-- /.container -->
+      </div>
+    </div>
   </body>
 </html>
