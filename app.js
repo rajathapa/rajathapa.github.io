@@ -36,7 +36,7 @@ app.directive('customPlaceholder', [function () {
       phoneNumber: "="
     },
     link: function (scope, element, attr) {
-      element.on('click', function () {
+      element.on('focus', function () {
         if (!scope.phoneNumber) {
           attr.$set('uiMask', '9999 999 999');
           attr.$set('placeholder', '____ ___ ___');
