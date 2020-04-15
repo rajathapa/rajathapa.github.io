@@ -17,14 +17,12 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
     if (!vm.isValidPhone()) {
       return;
     }
-
-    vm.phone = localStorage.phone;
+    // save in localstorage for retrival
+    localStorage.phone = vm.phone;
   };
 
 
   vm.isValidPhone = function () {
-
-
     if(vm.phone === null || angular.isUndefined(vm.phone) || vm.phone === ''){
             return false;
     }
@@ -33,11 +31,8 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
 
     var re = new RegExp(vm.regExpPhone);
     var result = re.test(phone);
-
     return result;
   };
-
-
 }]);
 
 app.directive('customPlaceholder', [function () {
@@ -89,8 +84,6 @@ app.directive('customPlaceholder', [function () {
           attr.$set('uiMask', defaultMask);
           setPlaceholder(attr, defaultMask);
         }
-
-        localStorage.phone = scope.phoneNumber;
       }
 
       function setPlaceholder(attr, value){
