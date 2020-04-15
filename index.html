@@ -17,12 +17,15 @@
       <div class="row">
         <div class="col-6-sm col-md-12"></div>
           <h1>Angular {{vm.name}}</h1>
-          <form name="testForm">
+          <form name="productSelection">
             <div class="form-group">
              <label for="exampleInputDate">Phone</label>
-              <input type="text" name="phone" class="form-control" id="phoneInput"
+              <input type="tel" 
+                name="phone" class="form-control" 
+                id="phone"
                 ng-model="vm.phone"
                 type="tel"
+                required
                 ui-mask="{{vm.phoneMask}}"
                 phone-number="vm.phone"
                 placeholder="{{vm.defaultPlaceholder}}"
@@ -30,11 +33,26 @@
                 pholder="vm.defaultPlaceholder"
                 >
             </div>
-              <p>phone value = {{vm.phone}}</p>
-            <span ng-show="!testForm['phone'].$valid">phone invalid</span>
-            <span ng-show="testForm.$dirty">form dirty</span>
-            <span ng-show="testForm.$invalid">form invalid</span>     
-            <input type="button" class="btn btn-primary" name="btn1" value="test button" ng-disabled="testForm.$invalid" ng-click="models.makeRequired = true;" />
+        <div class="row form-control__valiation--text"
+          ng-if="!vm.isValidPhone() && productSelection.phone.$invalid === false">
+          <div>
+            <span class="text-danger">{{vm.messageErrorPhone}}</span>
+          </div>
+        </div>
+        <div class="row form-control__valiation--text"
+          ng-if="productSelection.phone.$invalid && (productSelection.phone.$touched || vm.submitted)">
+          <div class="col-md-12">
+            <span class="text-danger">Please enter your phone number</span>
+          </div>
+        </div>
+      </br>
+        <p ng-show="vm.phone">phone =  {{vm.phone}}</p>
+                            <!-- <span>phone $invalid = {{productSelection.phone.$invalid}}</span>
+              <span>phone isValidPhone = {{vm.isValidPhone()}}</span>
+            <span ng-show="!productSelection['phone'].$valid">phone invalid</span>
+            <span ng-show="productSelection.$dirty">form dirty</span>
+            <span ng-show="productSelection.$invalid">form invalid</span>     
+            <input type="button" class="btn btn-primary" name="btn1" value="test button" ng-disabled="productSelection.$invalid" ng-click="models.makeRequired = true;" /> -->
           </form>
         </div>
       </div>

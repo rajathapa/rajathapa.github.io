@@ -5,10 +5,39 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
   vm.name = 'Ui Mask';
   vm.phone = '';
   vm.defaultPlaceholder = '04XX XXX XXX';
+  vm.regExpPhone = '^[1,0]\\d{9}$';
+  vm.messageErrorPhone = 'Please enter your phone number starting with a 0 or 1';
 // mimic refresh
   if (localStorage.phone != '') {
     vm.phone = localStorage.phone;
   }
+
+
+  vm.updatePhone = function () {
+    if (!vm.isValidPhone()) {
+      return;
+    }
+
+    vm.phone = localStorage.phone;
+  };
+
+
+  vm.isValidPhone = function () {
+
+
+    if(vm.phone === null || angular.isUndefined(vm.phone) || vm.phone === ''){
+            return false;
+    }
+    var phone = vm.phone;
+    phone = phone.replace(/[()\-# ]/gi, '');
+
+    var re = new RegExp(vm.regExpPhone);
+    var result = re.test(phone);
+
+    return result;
+  };
+
+
 }]);
 
 app.directive('customPlaceholder', [function () {
