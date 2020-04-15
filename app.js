@@ -4,7 +4,7 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
   var vm = this;
   vm.name = 'Ui Mask';
   vm.phone = '';
-  vm.defaultPlaceholder = '04XX XXX XXX';
+  vm.defaultPlaceholder = '04xx xxx xxx';
   vm.regExpPhone = '^[1,0]\\d{9}$';
   vm.messageErrorPhone = 'Please enter your phone number starting with a 0 or 1';
 // mimic refresh
