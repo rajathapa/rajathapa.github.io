@@ -61,7 +61,6 @@ app.directive('customPlaceholder', [function () {
       });
 
       element.on('keyup', function () {
-        console.log(scope.phoneNumber);
         if (!scope.phoneNumber) {
           return;
         };
@@ -87,8 +86,8 @@ app.directive('customPlaceholder', [function () {
       }
 
       function setPlaceholder(attr, value){
-        var replacePattern = /[a-zA-Z0-9]/g;
-        attr.$set('placeholder', value.replace(replacePattern, '_'));
+         var replacePattern = /[a-zA-Z0-9]/g;
+         attr.$set('placeholder', value.replace(replacePattern, ' '));
       }
     }
   }
