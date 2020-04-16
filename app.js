@@ -42,9 +42,11 @@ app.directive('customPlaceholder', [function () {
       pholder: "="
     },
     link: function (scope, element, attr) {
-      var defaultMask = '(99) 9999 9999';
+      var landlineMask = '(99) 9999 9999';
       var mobileMask = '9999 999 999';
-      var defaultPhoneMask = "9999999999";
+
+      var defaultMask = "9999999999";
+
       var regExpMobilePrefix = '(^[1][38]00)|(^04)';
       var re = new RegExp(regExpMobilePrefix);
 
@@ -56,8 +58,8 @@ app.directive('customPlaceholder', [function () {
 
       element.on('focus', function () {
         if (!scope.phoneNumber) {
-          attr.$set('uiMask', defaultPhoneMask);
-          setPlaceholder(attr, defaultPhoneMask);
+          attr.$set('uiMask', defaultMask);
+          setPlaceholder(attr, defaultMask);
         }
       });
 
@@ -66,8 +68,8 @@ app.directive('customPlaceholder', [function () {
           element.val().replace(" ", '').trim() === ""
         )
         {
-          attr.$set('uiMask', defaultPhoneMask);
-          setPlaceholder(attr, defaultPhoneMask);
+          attr.$set('uiMask', defaultMask);
+          setPlaceholder(attr, defaultMask);
         }
         if (!scope.phoneNumber) {
           return;
@@ -88,8 +90,8 @@ app.directive('customPlaceholder', [function () {
           setPlaceholder(attr, mobileMask);
         }
         else {
-          attr.$set('uiMask', defaultMask);
-          setPlaceholder(attr, defaultMask);
+          attr.$set('uiMask', landlineMask);
+          setPlaceholder(attr, landlineMask);
         }
       }
 
