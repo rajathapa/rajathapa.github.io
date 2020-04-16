@@ -44,6 +44,7 @@ app.directive('customPlaceholder', [function () {
     link: function (scope, element, attr) {
       var defaultMask = '(99) 9999 9999';
       var mobileMask = '9999 999 999';
+      var defaultPhoneMask = "9999999999";
       var regExpMobilePrefix = '(^[1][38]00)|(^04)';
       var re = new RegExp(regExpMobilePrefix);
 
@@ -55,12 +56,19 @@ app.directive('customPlaceholder', [function () {
 
       element.on('focus', function () {
         if (!scope.phoneNumber) {
-          attr.$set('uiMask', mobileMask);
-          setPlaceholder(attr, mobileMask);
+          attr.$set('uiMask', defaultPhoneMask);
+          setPlaceholder(attr, defaultPhoneMask);
         }
       });
 
       element.on('keyup', function () {
+        if (element.val().replace(" ", '').trim() === "( )" || 
+          element.val().replace(" ", '').trim() === ""
+        )
+        {
+          attr.$set('uiMask', defaultPhoneMask);
+          setPlaceholder(attr, defaultPhoneMask);
+        }
         if (!scope.phoneNumber) {
           return;
         };
