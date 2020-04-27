@@ -14,10 +14,14 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
   vm.messageErrorPhoneNZ = 'Please enter a valid phone number NZ.';
   // mimic refresh
 
-  vm.phoneAU = localStorage.phoneAU;
-  vm.phoneNZ = localStorage.phoneNZ;
+  if(localStorage.phoneNZ){
+    vm.phoneNZ = localStorage.phoneNZ;
+  }
 
-
+  if(localStorage.phoneAU){
+    vm.phoneAU = localStorage.phoneAU;
+  }
+  
   vm.updatePhone = function () {
     if (!vm.isValidPhone(vm.regExpPhone, vm.phoneAU)) {
       return;
