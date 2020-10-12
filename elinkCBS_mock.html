@@ -1,0 +1,59 @@
+<html>
+<head>Mock up CBS Web UI</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+<script type="text/javascript">
+    var app = angular.module('myApp', []);
+    app.controller('MainCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+        $scope.cbsBrokerLogon = 'TRNroot';
+        $scope.cbsClientId = 'Tester11';
+        $scope.cbsToken = 'TestingTokenCBS';
+        $scope.cbsCompany = 'CompanyOne';
+        $scope.timeStamp = new Date().toISOString();
+        $scope.submitForm = function () {
+            console.log("I am clicked")
+            var req = {
+                method: 'POST',
+                url: 'https://dev-elink.api.au.npd.bizcover.io/api/BrokerAuthentication/broker-access',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                data: {
+                    cbsBrokerLogon: $scope.cbsBrokerLogon,
+                    cbsClientId: $scope.cbsClientId,
+                    cbsToken: $scope.cbsToken,
+                    cbsCompany: $scope.cbsCompany,
+                    timeStamp: $scope.timeStamp
+                }
+            }
+            $http(req)
+                .then(function (response) {
+                    console.log(response);
+                    $window.location.href = response.data.brokerAccessUrl;
+                }, function (error) {
+                    console.log(error);
+                });
+        };
+        console.log("I am loaded")
+    }]);
+
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, ['myApp']);
+    });
+</script>
+
+<body ng-app="myApp">
+    <div ng-controller="MainCtrl">
+        <h1>CBS Form</h1>
+        <div>
+            <input type="text" ng-model="cbsBrokerLogon" name="cbsBrokerLogon" />
+            <input type="text" ng-model="cbsClientId" name="cbsClientId"  />
+            <input type="text" ng-model="cbsToken" name="cbsToken" />
+            <input type="text" ng-model="cbsCompany" name="cbsCompany" />
+            <input type="text" ng-model="timeStamp" name="timeStamp" />
+
+            <input type="submit" id="submit" value="Submit" ng-click="submitForm()" />
+        </div>
+    </div>
+</body>
+
+</html>
