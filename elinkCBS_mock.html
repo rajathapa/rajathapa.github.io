@@ -1,5 +1,16 @@
 <html>
-<head>Mock up CBS Web UI</head>
+<head>
+    Mock up CBS Web UI
+<style>
+    .label-width{
+        width: 200px;
+        display:inline-block
+    }
+    .input-box-margin{
+        margin-left: 50px;
+    }
+</style>
+</head>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
 <script type="text/javascript">
     var app = angular.module('myApp', []);
@@ -9,11 +20,16 @@
         $scope.cbsToken = 'TestingTokenCBS';
         $scope.cbsCompany = 'CompanyOne';
         $scope.timeStamp = new Date().toISOString();
+        $scope.env = "DEV";
+        $scope.errorText = "";
+
         $scope.submitForm = function () {
             console.log("I am clicked")
+
+            var url = 'https://' + $scope.env + '-elink.api.au.npd.bizcover.io/api/BrokerAuthentication/broker-access';
             var req = {
                 method: 'POST',
-                url: 'https://dev-elink.api.au.npd.bizcover.io/api/BrokerAuthentication/broker-access',
+                url: url,
                 headers: {
                     'Content-Type': "application/json",
                 },
@@ -30,6 +46,7 @@
                     console.log(response);
                     $window.location.href = response.data.brokerAccessUrl;
                 }, function (error) {
+                    $scope.errorText = error.data + ' STATUS-CODE = ' + error.status;
                     console.log(error);
                 });
         };
@@ -44,15 +61,29 @@
 <body ng-app="myApp">
     <div ng-controller="MainCtrl">
         <h1>CBS Form</h1>
-        <div>
-            <input type="text" ng-model="cbsBrokerLogon" name="cbsBrokerLogon" />
-            <input type="text" ng-model="cbsClientId" name="cbsClientId"  />
-            <input type="text" ng-model="cbsToken" name="cbsToken" />
-            <input type="text" ng-model="cbsCompany" name="cbsCompany" />
-            <input type="text" ng-model="timeStamp" name="timeStamp" />
-
+        <p style="color: red;">{{errorText}}</p>
+        <div>          
+            </br>
+            <label class ="label-width">CBSBrokerLogon</label>
+            <input class="input-box-margin" type="text" ng-model="cbsBrokerLogon" name="cbsBrokerLogon" />
+                    <br />
+            <label class ="label-width">CBSClientId</label>
+            <input class="input-box-margin" type="text" ng-model="cbsClientId" name="cbsClientId"  />
+                    <br />
+            <label class ="label-width">CBSToken</label>
+            <input class="input-box-margin" type="text" ng-model="cbsToken" name="cbsToken" />
+                    <br />
+            <label class ="label-width">CBSCompany</label>
+            <input class="input-box-margin" type="text" ng-model="cbsCompany" name="cbsCompany" />
+                    <br />
+            <label class ="label-width">CBSTimeStamp</label>
+            <input class="input-box-margin" type="text" ng-model="timeStamp" name="timeStamp" />
+                <br />
+            <label class ="label-width">Elink ENV: (DEV/UAT/SIT)</label> 
+            <input class="input-box-margin" type="text" ng-model="env" name="env" />
+                <br />
             <input type="submit" id="submit" value="Submit" ng-click="submitForm()" />
-        </div>
+        </div> 
     </div>
 </body>
 
